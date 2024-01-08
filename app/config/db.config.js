@@ -11,7 +11,7 @@ module.exports = {
   development: {
     database: 'sangini',
     username: 'postgres',
-    password: '1234',
+    password: 'password',
     host: 'localhost',
     dialect: 'postgres'
   },
@@ -19,17 +19,8 @@ module.exports = {
   test: {
     database: 'sangini_test',
     username: 'postgres',
-    password: '1234',
-    host: 'postgres',
-    dialect: 'postgres'
-  },
-
-  staging: {
-    database: 'sangini',
-    username: 'postgres',
-    password: 'postgres',
-    port: '5432',
-    host: 'postgres',
+    password: 'password',
+    host: 'localhost',
     dialect: 'postgres'
   },
 
@@ -38,13 +29,6 @@ module.exports = {
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
     host: process.env.DB_HOST,
-    dialect: 'postgres',
-    port : 5432,
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false,
-      },
-    }
+    dialect: 'postgres'
   }
 };

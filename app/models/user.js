@@ -11,68 +11,24 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       unique: true,
     },
-    email: {
+    phoneNumber: {
       type: Sequelize.STRING,
-      isEmail: true,
       unique: true,
     },
-    password: {
-      type: Sequelize.STRING,
+    age: {
+      type: DataTypes.INTEGER
     },
-    firstName: {
-      type: Sequelize.STRING,
+    profession: {
+      type: Sequelize.STRING
     },
-    lastName: {
-      type: Sequelize.STRING,
-    },
-    state: {
-      type: Sequelize.STRING,
+    location: {
+      type: Sequelize.STRING
     },
     city: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING
     },
-    gender: {
-      type: Sequelize.STRING,
-    },
-    bio: {
-      type: Sequelize.TEXT,
-    },
-    dob: {
-      type: Sequelize.DATE,
-    },
-    isVerfified: {
-      type: Sequelize.BOOLEAN,
-      defaultValue: false
-    },
-    uniqueString: {
-      type: DataTypes.STRING
-    },
-    spotifyRefreshToken: {
-      type: Sequelize.STRING,
-    },
-    isSpotifyConnected: {
-      type: Sequelize.BOOLEAN, 
-      defaultValue: false
-    },
-    spotifyPlaylistId: {
-      type: Sequelize.STRING,
-    },
-    isProfileUpdated: {
-      type: Sequelize.BOOLEAN,
-      defaultValue: false
-    },
-    updateState: {
-        // 0: "NOTHING"
-        // 1: "PROFILE"
-        // 2: "PROFILE UPLOAD"
-        // 3: "PLAYLIST SYNC"
-        // 4: "ETC"
-        // 10: "Complete"
-      type: Sequelize.STRING,
-      defaultValue: 0
-    },
-    hobbies: {
-      type: Sequelize.ARRAY(Sequelize.STRING),
+    isCameraVerified: {
+      type: Sequelize.STRING
     }
   });
 

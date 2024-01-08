@@ -1,5 +1,7 @@
 const db = require("../models");
 const config = require("../config/auth.config");
+const twilioService = require("../services/twilioService");
+
 
 const User = db.users;
 // To send the email to the user
@@ -165,3 +167,23 @@ exports.resendVerificationEmail = async (req, res) => {
     return sendBadRequest(res, 401, "Invalid access");
   }
 }
+
+//send OTP via twilio
+exports.sendOtp = async (req, res) => {
+  try {
+    const verification = await twilioService.sendSmsVerification(req.body.phoneNumber);
+    res.status(200).json({ success: true, verification });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+//verify OTP via twilio
+exports.verifyOtp = async (req, res) => {
+  try {
+    const verificationCheck = await twilioService.verifySmsCode(req.body.phoneNumber, req.body.code);
+    res.status(200).json({ success: verificationCheck.status === 'approved' });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};

@@ -14,6 +14,14 @@ configure `db.config.js`
 
 `npm start`
 
+
+### if you are facing issue with db
+install postgres and start postgres service with below commands
+`psql`
+`CREATE ROLE postgres WITH LOGIN SUPERUSER;`
+`ALTER ROLE postgres WITH PASSWORD 'yourpassword';`
+`createddb sangini`
+
 ### For creating the test database 
 `CREATE DATABASE sangini_test WITH OWNER postgres;`
 
