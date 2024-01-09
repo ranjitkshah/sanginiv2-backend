@@ -2,11 +2,9 @@ const crypto = require("crypto");
 
 const sendJSONResponse = (res, status, message, data) => {
     const jsonResponse = {
-        metadata: {
             status,
             message,
-        },
-        data,
+        data
     };
 
     res.status(status);

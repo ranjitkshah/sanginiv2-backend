@@ -182,8 +182,24 @@ exports.sendOtp = async (req, res) => {
 exports.verifyOtp = async (req, res) => {
   try {
     const verificationCheck = await twilioService.verifySmsCode(req.body.phoneNumber, req.body.code);
-    res.status(200).json({ success: verificationCheck.status === 'approved' });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    let user;
+    user = await User.findOne({
+      where: {phoneNumber: req.body.phoneNumber}
+    })
+    if(!user) {
+      user = await User.create({
+        phoneNumber: req.body.phoneNumber
+      });
+    }
+    let token = jwt.sign({ id: user.dataValues.id }, config.secret, {
+      expiresIn: 86400, // 24 hours
+    });
+
+    return sendJSONResponse(res, 200, "User created", {
+      user,
+      accessToken: token
+    });
+  } catch (err) {
+     return sendBadRequest(res, 500, `${err.message}`)
   }
 };
