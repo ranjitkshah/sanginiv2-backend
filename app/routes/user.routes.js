@@ -1,7 +1,6 @@
 const userController = require("../controllers/user.controller");
 const friendrequestController = require("../controllers/friendRequest.controller");
 const userimageController = require("../controllers/userImage.controller");
-const statusController = require("../controllers/userStatus.controller");
 
 const { authJwt } = require("../middleware");
 

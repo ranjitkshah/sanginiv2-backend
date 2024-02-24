@@ -4,37 +4,12 @@ const twilioService = require("../services/twilioService");
 
 
 const User = db.users;
-// To send the email to the user
-const sendUserEmail = require("../middleware/sendUserEmail");
 const { sendJSONResponse, sendBadRequest, generateRandomString } = require("../utils/handle");
 const { checkEmail } = require("../utils/extraFucntions");
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
 
-
-
-exports.signup = async (req, res) => {
-  // Save User to Database
-  try {
-    let uniqueString = generateRandomString('hex');
-
-    let user = await User.create({
-      username: req.body.username,
-      email: req.body.email,
-      password: bcrypt.hashSync(req.body.password, 8),
-      uniqueString: uniqueString
-    });
-
-    if (user) {
-      sendUserEmail(req.body.email, uniqueString);
-      return sendJSONResponse(res, 200, 'User Registered Successfully');
-    }
-  }
-  catch (err) {
-    return sendBadRequest(res, 500, err.message);
-  }
-};
 
 exports.signin = async (req, res) => {
   try {
@@ -151,22 +126,7 @@ exports.verifyUserEmail = async (req, res) => {
   }
 }
 
-// Resends the verification email if time limit of the verification link has passed
-exports.resendVerificationEmail = async (req, res) => {
-  try {
-    const user = await User.findOne({ uniqueString: req.params.uniqueString });
-    let uniqueString = generateRandomString('hex');
 
-    user.uniqueString = uniqueString;
-    await user.save();
-
-    sendUserEmail(user.email, uniqueString);
-
-    return sendJSONResponse(res, 200, "Email Resent");
-  } catch (err) {
-    return sendBadRequest(res, 401, "Invalid access");
-  }
-}
 
 //send OTP via twilio
 exports.sendOtp = async (req, res) => {
@@ -205,4 +165,5 @@ exports.verifyOtp = async (req, res) => {
 };
 
 
-//create authToke
+//create authToken
+
