@@ -14,24 +14,9 @@ module.exports = function (app) {
     next();
   });
 
-  app.get('/api/user/:id',[authJwt.verifyToken], userController.getUserById);
-  app.put('/api/user/edit',[authJwt.verifyToken], userController.editUser);
-  app.get('/api/users',[authJwt.verifyToken], userController.getAllUser);
-  app.post('/api/user/image/upload',[authJwt.verifyToken], userimageController.addUserImage);
-  app.put('/api/user/image/update',[authJwt.verifyToken], userimageController.updateUserImage);
-  app.delete('/api/user/image/delete/:id', [authJwt.verifyToken], userimageController.deleteUserImage);
-  app.get('/api/user/:id/image', userimageController.getUserImage);
-  app.get('/api/user/:id/playlist', userController.getPlaylist);
-  app.post('/api/user/create/friendrequest', [authJwt.verifyToken], friendrequestController.createFriendRequest);
-  app.put('/api/user/update/friendrequest', [authJwt.verifyToken], friendrequestController.updateFriendRequest);
-  app.delete('/api/user/delete/friendrequest', [authJwt.verifyToken], friendrequestController.deleteFriendRequest);
-  app.get('/api/user/list/friendrequest',[authJwt.verifyToken],friendrequestController.listFriendRequest);
-  app.get('/api/user/:id/status',[authJwt.verifyToken], statusController.getStatusById);
-  app.post('/api/user/create/status', [authJwt.verifyToken], statusController.addStatus);
-  app.put('/api/user/update/status', [authJwt.verifyToken], statusController.updateStatus);
-  app.put('/api/user/like/status', [authJwt.verifyToken], statusController.likeStatus);
-  app.delete('/api/user/delete/status', [authJwt.verifyToken], statusController.deleteStatus);
-  app.get('/api/user/status/all',[authJwt.verifyToken], statusController.getAllStatus);
-  app.post("/api/user/updatestate",[authJwt.verifyToken], userController.profileUpdateState);
+  //check routes and code clean up
+  app.get('/api/user/:id', userController.getUserById);
+  app.post('/api/user/:id/playlist', userController.createPlaylist);
+  app.get('/api/user/:id/playlist', userController.getUserPlaylistById);
 };
  

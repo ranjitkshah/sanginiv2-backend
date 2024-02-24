@@ -2,12 +2,7 @@ const { Sequelize, DataTypes, Model } = require("sequelize");
 
 module.exports = (sequelize, Sequelize) => {
   const User = sequelize.define("users", {
-    id: {
-      type: DataTypes.UUID,
-      defaultValue: Sequelize.UUIDV4,
-      primaryKey: true,
-    },
-    username: {
+    firebaseUserUUID: {
       type: Sequelize.STRING,
       unique: true,
     },
@@ -15,23 +10,9 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       unique: true,
     },
-    age: {
-      type: DataTypes.INTEGER
-    },
-    profession: {
-      type: Sequelize.STRING
-    },
-    location: {
-      type: Sequelize.STRING
-    },
-    city: {
-      type: Sequelize.STRING
-    },
-    isCameraVerified: {
-      type: Sequelize.STRING
+    meta: {
+      type: Sequelize.JSON
     }
   });
-
-
   return User;
 };

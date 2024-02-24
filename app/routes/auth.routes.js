@@ -10,17 +10,21 @@ module.exports = function (app) {
     next();
   });
 
-  app.post(
-    "/api/auth/signup",
-    [verifySignUp.checkDuplicateUsernameOrEmail],
-    controller.signup
-  );
+  // app.post(
+  //   "/api/auth/signup",
+  //   [verifySignUp.checkDuplicateUsernameOrEmail],
+  //   controller.signup
+  // );
 
-  app.post("/api/auth/google", controller.getGoogleUserData);
+  // app.post("/api/auth/google", controller.getGoogleUserData);
   
-  app.post("/api/auth/signin", controller.signin);
-  app.get("/api/auth/verify/:uniqueString", controller.verifyUserEmail);
-  app.get("/api/auth/resendVerificationEmail/:uniqueString", controller.resendVerificationEmail);
+  // app.post("/api/auth/signin", controller.signin);
+  // app.get("/api/auth/verify/:uniqueString", controller.verifyUserEmail);
+  // app.get("/api/auth/resendVerificationEmail/:uniqueString", controller.resendVerificationEmail);
+
+  //v2 apis
   app.post("/api/otp/send", controller.sendOtp);
   app.post("/api/otp/verify", controller.verifyOtp)
+
+
 };

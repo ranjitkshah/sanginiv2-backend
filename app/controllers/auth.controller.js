@@ -203,3 +203,6 @@ exports.verifyOtp = async (req, res) => {
      return sendBadRequest(res, 500, `${err.message}`)
   }
 };
+
+
+//create authToke

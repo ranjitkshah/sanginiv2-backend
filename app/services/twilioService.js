@@ -2,7 +2,6 @@ const twilio = require('twilio');
 
 // Twilio credentials from environment variables or configuration file
 
-
 const client = new twilio(accountSid, authToken);
 
 const sendSmsVerification = async (phoneNumber) => {
