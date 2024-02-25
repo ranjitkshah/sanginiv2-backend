@@ -12,7 +12,7 @@ const verifyToken = async (req, res, next) => {
     }
 
     const decoded = await new Promise((resolve, reject) => {
-      jwt.verify(token, config.secret, (err, decoded) => {
+      jwt.verify(token, 'for_you_backend', (err, decoded) => {
         if (err) {
           reject(err);
         } else {
@@ -21,8 +21,7 @@ const verifyToken = async (req, res, next) => {
       });
     });
 
-
-    const user = await db.user.findByPk(decoded.id);
+    const user = await db.users.findByPk(decoded.id);
     if (!user) {
       return sendBadRequest(res, 404, "User not found.");
     }
