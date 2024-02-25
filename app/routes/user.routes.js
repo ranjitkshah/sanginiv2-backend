@@ -14,8 +14,9 @@ module.exports = function (app) {
   });
 
   //check routes and code clean up
-  app.get('/api/user/:id', userController.getUserById);
-  app.post('/api/user/:id/playlist', userController.createPlaylist);
-  app.get('/api/user/:id/playlist', userController.getUserPlaylistById);
+  app.post('/api/user', userController.createUserOrLoginUser);
+  app.get('/api/user/:id', [authJwt.verifyToken],userController.getUserById);
+  app.post('/api/user/:id/playlist',[authJwt.verifyToken], userController.createPlaylist);
+  app.get('/api/user/:id/playlist', [authJwt.verifyToken],userController.getUserPlaylistById);
 };
  

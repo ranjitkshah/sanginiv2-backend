@@ -165,5 +165,4 @@ exports.verifyOtp = async (req, res) => {
 };
 
 
-//create authToken
 

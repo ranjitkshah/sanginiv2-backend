@@ -1,16 +1,23 @@
 const db = require("../models");
 const User = db.users;
 const userPlaylist = db.userPlaylists; 
-const Track = db.tracks;
-const FriendRequest = db.friendrequests;
 const { sendJSONResponse, sendBadRequest } = require("../utils/handle")
-const { getPagingData, getPagination } = require("../utils/paginate");
+const jwt = require('jsonwebtoken');
+
+// Assuming you have an environment variable for JWT_SECRET
+const JWT_SECRET = process.env.JWT_SECRET || 'for_you_backend';
+
+const generateAuthToken = (user) => {
+  const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '24h' });
+  return token;
+};
+
 
 const Op = db.Sequelize.Op;
 
 
 
-exports.createUser = async (req, res) => {
+exports.createUserOrLoginUser = async (req, res) => {
   try {
     const { firebaseUserUUID, phoneNumber, meta } = req.body;
 
@@ -18,19 +25,29 @@ exports.createUser = async (req, res) => {
       return sendBadRequest(res, 400, "Missing required user details.");
     }
 
-    const newUser = await db.users.create({
-      firebaseUserUUID,
-      phoneNumber,
-      meta
+    let user = await db.users.findOne({
+      where: { phoneNumber: phoneNumber }
     });
 
-    return sendJSONResponse(res, 201, "User created successfully", { user: newUser });
-  } catch (error) {
-    console.error("Error creating user:", error);
-    if (error.name === 'SequelizeUniqueConstraintError') {
-      return sendBadRequest(res, 409, "User with the provided details already exists.");
+    let message = "User logged in successfully";
+    if (!user) {
+      user = await db.users.create({
+        firebaseUserUUID,
+        phoneNumber,
+        meta
+      });
+      message = "User created successfully";
     }
-    return sendBadRequest(res, 500, `Error while creating user: ${error.message}`);
+
+    const token = generateAuthToken(user);
+
+    return sendJSONResponse(res, 201, message, { user: user, token: token });
+  } catch (error) {
+    console.error("Error in createUserOrLoginUser:", error);
+    if (error.name === 'SequelizeUniqueConstraintError') {
+      return sendBadRequest(res, 409, "A user with the provided phone number already exists.");
+    }
+    return sendBadRequest(res, 500, `Error while processing request: ${error.message}`);
   }
 };
 
